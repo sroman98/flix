@@ -14,17 +14,29 @@ PODS:
   - AFNetworking/Serialization (3.2.1)
   - AFNetworking/UIKit (3.2.1):
     - AFNetworking/NSURLSession
+  - SVProgressHUD (2.2.6)
 
 DEPENDENCIES:
   - AFNetworking
+  - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AFNetworking
 
+EXTERNAL SOURCES:
+  SVProgressHUD:
+    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
+
+CHECKOUT OPTIONS:
+  SVProgressHUD:
+    :commit: 4fdf3fdc8703fd9915dae33fc1363c604a06b24e
+    :git: https://github.com/SVProgressHUD/SVProgressHUD.git
+
 SPEC CHECKSUMS:
   AFNetworking: b6f891fdfaed196b46c7a83cf209e09697b94057
+  SVProgressHUD: 6ed134667e9ebb2f33679e8273cd48fd3fa349e5
 
-PODFILE CHECKSUM: ec2d5cf6ff6860ec9b1b0519af50333d787a791f
+PODFILE CHECKSUM: ff8eee6cf21351b868ee4ed60e739c3bc67d0f53
 
 COCOAPODS: 1.7.2

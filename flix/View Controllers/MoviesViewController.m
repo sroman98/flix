@@ -10,6 +10,7 @@
 #import "MovieCell.h"
 #import "DetailsViewController.h"
 #import "UIImageView+AFNetworking.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -28,7 +29,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
-    [self.activityIndicator startAnimating];
+    [SVProgressHUD show];
     [self fetchMovies];
     
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -53,7 +54,7 @@
             [self.tableView reloadData];
         }
         [self.refreshControl endRefreshing];
-        [self.activityIndicator stopAnimating];
+        [SVProgressHUD dismiss];
     }];
     [task resume];
 }
