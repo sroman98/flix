@@ -204,6 +204,11 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" id="zXr-QG-0DQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="555"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCollectionCell" id="RZs-El-Kel" customClass="MovieCollectionCell">
                                         <rect key="frame" x="0.0" y="0.0" width="132" height="185"/>
@@ -231,6 +236,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Upcoming Movies" id="sgF-v8-icW"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="zXr-QG-0DQ" id="NVx-F8-1vN"/>
                         <outlet property="collectionView" destination="duW-La-bt4" id="0GU-lJ-soQ"/>
                         <outlet property="movieSearchBar" destination="QCY-6q-6O8" id="9is-AR-Exh"/>
                     </connections>

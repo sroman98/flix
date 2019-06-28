@@ -10,6 +10,7 @@
 #import "DetailsViewController.h"
 #import "MovieCollectionCell.h"
 #import "UIImageView+AFNetworking.h"
+#import <SVProgressHUD/SVProgressHUD.h>
 
 @interface MoviesGridViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UISearchBarDelegate>
 
@@ -17,6 +18,8 @@
 @property (nonatomic, strong) NSArray *filteredMovies;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UISearchBar *movieSearchBar;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -30,7 +33,12 @@
     self.collectionView.delegate = self;
     self.movieSearchBar.delegate = self;
     
+    [SVProgressHUD show];
     [self fetchMovies];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchMovies) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView insertSubview:self.refreshControl atIndex:0];
     
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
     
@@ -65,8 +73,9 @@
             self.filteredMovies = self.movies;
             [self.collectionView reloadData];
         }
-//        [self.refreshControl endRefreshing];
-//        [SVProgressHUD dismiss];
+        
+        [self.refreshControl endRefreshing];
+        [SVProgressHUD dismiss];
     }];
     [task resume];
 }
