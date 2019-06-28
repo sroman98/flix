@@ -12,12 +12,14 @@
 #import "UIImageView+AFNetworking.h"
 #import <SVProgressHUD/SVProgressHUD.h>
 
-@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface MoviesViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) NSArray *movies;
+@property (nonatomic, strong) NSArray *filteredMovies;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UISearchBar *moviesSearchBar;
 
 @end
 
@@ -28,6 +30,7 @@
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.moviesSearchBar.delegate = self;
     
     [SVProgressHUD show];
     [self fetchMovies];
@@ -59,6 +62,7 @@
             NSDictionary *dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             
             self.movies = dataDictionary[@"results"];
+            self.filteredMovies = self.movies;
             
             [self.tableView reloadData];
         }
@@ -69,13 +73,13 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.movies.count;
+    return self.filteredMovies.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MovieCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MovieCell"];
     
-    NSDictionary *movie = self.movies[indexPath.row];
+    NSDictionary *movie = self.filteredMovies[indexPath.row];
     cell.titleLabel.text = movie[@"title"];
     cell.synopsisLabel.text = movie[@"overview"];
     
@@ -89,6 +93,31 @@
     
     
     return cell;
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSDictionary *evaluatedObject, NSDictionary *bindings) {
+            NSString *evaluatedObjectTitle = evaluatedObject[@"title"];
+            return [evaluatedObjectTitle containsString:searchText];
+        }];
+        self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate];
+        
+//        NSLog(@"%@", self.filteredData);
+        
+    }
+    else {
+        self.filteredMovies = self.movies;
+    }
+    
+    [self.tableView reloadData];
+    
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.moviesSearchBar resignFirstResponder];
 }
 
 #pragma mark - Navigation

@@ -99,7 +99,7 @@
             NSString *evaluatedObjectTitle = evaluatedObject[@"title"];
             return [evaluatedObjectTitle containsString:searchText];
         }];
-        self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate];        
+        self.filteredMovies = [self.movies filteredArrayUsingPredicate:predicate];
     }
     else {
         self.filteredMovies = self.movies;
@@ -107,6 +107,10 @@
     
     [self.collectionView reloadData];
     
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.movieSearchBar resignFirstResponder];
 }
 
 
