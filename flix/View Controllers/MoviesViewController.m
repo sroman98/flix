@@ -32,6 +32,8 @@
     self.tableView.delegate = self;
     self.moviesSearchBar.delegate = self;
     
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
     [SVProgressHUD show];
     [self fetchMovies];
     
